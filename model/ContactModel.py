@@ -33,7 +33,7 @@ class ContactModels:
                 query = """
                             select u.id, u.username AS contact_name, u.email, u.phone from users u
                             where u.username like %s 
-                            and upper(u.username) not in (select upper(c.contact_name) from contact c where upper(c.user_name) = upper(%s))
+                            and upper(u.username) not in (select upper(c.contact_name) from contact c where unfriend = 0 and upper(c.user_name) = upper(%s))
                             and upper(u.username) <> upper(%s)
                             order by u.created_at desc
                         """
@@ -55,6 +55,25 @@ class ContactModels:
             with conn.cursor() as cursor:
                 query = "INSERT INTO contact (contact_name, email, phone, user_name) VALUES (upper(%s), %s, %s, upper(%s));"
                 cursor.execute(query, (contact_name, email, phone, username))
+                conn.commit()
+                return True
+        except Exception as e:
+            print(f"Error: {e}")
+            return False
+        finally:
+            if conn:
+                Database.release_connection(conn)
+
+    @staticmethod
+    def delete_contac(contacId):
+        conn = None
+        try:
+            conn = Database.get_connection()
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "update contact set unfriend = 1 where id = %s", 
+                    (contacId,)
+                )
                 conn.commit()
                 return True
         except Exception as e:

@@ -102,12 +102,16 @@ class AccountView(tk.Frame):
 
             password_var = tk.StringVar(value=acc_pass_enc)
             password_entry = tk.Entry(account_frame, textvariable=password_var, font=("Inter", 12), bd=0, bg="#FFFFFF", show="*", state="readonly")
-            password_entry.place(x=92, y=55, width=200)
+            password_entry.place(x=92, y=55, width=150)
 
-            underlined_font = font.Font(family="Inter", size=9, underline=True)
-            account_info = tk.Button(account_frame, text="Chi tiết", relief="flat", borderwidth=1, fg="#AC1D1F", font=underlined_font , bg="#FFFFFF", 
+            underlined_font = font.Font(family="Inter", size=10, underline=True)
+            account_info = tk.Button(account_frame, text="Chi tiết", relief="flat", borderwidth=1, fg="#000000", font=("Inter", 11) , bg="#89EB89", 
                                              highlightthickness=0,  command=functools.partial(self.controller.call_account_view, accountid))
-            account_info.place(x=300, y=5)
+            account_info.place(x=280, y=10)
+
+            delete_account_info = tk.Button(account_frame, text="Xoá", relief="flat", borderwidth=1, fg="#AC1D1F", font=underlined_font , bg="#FFFFFF", 
+                                             highlightthickness=0,  command=functools.partial(self.controller.delete_account, accountid))
+            delete_account_info.place(x=290, y=50)
 
             # show_password_button = tk.Button(account_frame, text="👁", relief="flat", borderwidth=0, font=("Inter", 8), bg="#FFFFFF", 
             #                                  highlightthickness=0,  command=lambda e=password_entry: self.toggle_password(e))

@@ -74,6 +74,14 @@ class DashboardController:
         controller = controller_class(*controller_args) if controller_class else self
         return view_class(self.view.container, controller, self.user)
     
+    def logout(self):
+        from controller.AuthController import AuthController
+        if "MESSAGE" in self.frames:
+            self.frames["MESSAGE"].stop_run_checking()
+        self.view.destroy()
+        AuthController(self.root)
+        
+
     def show_accountInfo(self, accountId):
         # self.stop_checking_for_new_messages()
         if "MESSAGE" in self.frames:

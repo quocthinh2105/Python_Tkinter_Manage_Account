@@ -18,7 +18,7 @@ class AccountModels:
         try:
             conn = Database.get_connection()
             with conn.cursor() as cursor:
-                query = "select id, user_name, app_name, acc_name, acc_pass, acc_pass_enc, key_enc, description, is_remove from account_pass ap where user_name = upper(%s) order by created_at desc;"
+                query = "select id, user_name, app_name, acc_name, acc_pass, acc_pass_enc, key_enc, description, is_remove from account_pass ap where user_name = upper(%s) and is_remove = 0 order by created_at desc;"
                 cursor.execute(query, (username,))
                 result = cursor.fetchall()
                 return [AccountModels(*data) for data in result]
@@ -75,6 +75,25 @@ class AccountModels:
                 cursor.execute(
                     "update account_pass set app_name = %s, acc_name = %s, acc_pass = %s, acc_pass_enc = %s, key_enc = %s, description = %s where id = %s", 
                     (app_name, acc_name, acc_pass, acc_pass_enc, key_enc, description, accountId)
+                )
+                conn.commit()
+                return True
+        except Exception as e:
+            print(f"Error: {e}")
+            return False
+        finally:
+            if conn:
+                Database.release_connection(conn)
+
+    @staticmethod
+    def delete_account(accountId):
+        conn = None
+        try:
+            conn = Database.get_connection()
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "update account_pass set is_remove = 1 where id = %s", 
+                    (accountId,)
                 )
                 conn.commit()
                 return True

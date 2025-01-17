@@ -1,5 +1,6 @@
 # view/dashboard_view.py
 import tkinter as tk
+from PIL import Image, ImageTk
 
 class DashboardView(tk.Frame):
     def __init__(self, parent, controller):
@@ -39,6 +40,11 @@ class DashboardView(tk.Frame):
         self.image_avatar = tk.PhotoImage(file=self.controller.load_asset("avatar.png"))
         self.canvas.create_image(89, 78, image=self.image_avatar)
 
+        self.image_logout = tk.PhotoImage(file=self.controller.load_asset("logout.png"))
+        self.button_logout = tk.Button(self.canvas, image=self.image_logout, relief="flat", borderwidth=0, background="#D9D9D9",
+                            highlightthickness=0, command=lambda:self.controller.logout())
+        self.button_logout.place(x=14, y=14, width=20, height=20)
+        
         self.create_button("Người Dùng", 9, 165, 160, 40,"USER")
         self.create_button("Tài Khoản", 9, 220, 160, 40, "ACCOUNT")
         self.create_button("Bạn Bè", 9, 275, 160, 40, "CONTACT")

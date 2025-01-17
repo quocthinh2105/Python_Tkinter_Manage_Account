@@ -23,6 +23,15 @@ class ContactController:
     def find_contacts(selt, username, contact_name):
         return ContactModels.find_contact(username, contact_name)
     
+    def delete_contact(selt, contacId):
+        if ContactModels.delete_contac(contacId):
+            messagebox.showinfo("Thông Báo!", "Xoá bạn thành công.")
+            contact_view = selt.dashboard_controller.frames.get("CONTACT")
+            if contact_view:
+                contact_view.refresh_data()
+        else:
+            messagebox.showinfo("Thông Báo!", "Có lỗi trong quá trình xử lý.\nVui lòng thử lại sau!")
+    
     def add_contact(selt, username, contact_name, email, phone):
         if ContactModels.add_contact(username, contact_name, email, phone):
             messagebox.showinfo("Thông Báo!", "Thêm bạn thành công.")

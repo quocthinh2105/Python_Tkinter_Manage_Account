@@ -92,9 +92,13 @@ class ContactView(tk.Frame):
             email_label.place(x=70, y=26)
 
             underlined_font = font.Font(family="Inter", size=9, underline=True)
-            account_info = tk.Button(contact_frame, text="Tin nhắn", relief="flat", borderwidth=1, fg="#AC1D1F", font=underlined_font , bg="#FFFFFF", 
+            message = tk.Button(contact_frame, text="Tin nhắn", relief="flat", borderwidth=1, fg="#000000", font=("Inter", 9) , bg="#8EFF8E", 
                                             highlightthickness=0,  command=functools.partial(self.controller.show_message, contact.contact_name))
-            account_info.place(x=280, y=10)
+            message.place(x=280, y=2)
+
+            delete_contact = tk.Button(contact_frame, text="Xoá bạn", relief="flat", borderwidth=1, fg="#AC1D1F", font=underlined_font , bg="#FFFFFF", 
+                                            highlightthickness=0,  command=functools.partial(self.controller.delete_contact, contact.id))
+            delete_contact.place(x=280, y=27)
 
     def filter_contacts(self, event=None):
         search_text = self.search.get().lower()

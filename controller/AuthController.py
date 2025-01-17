@@ -7,7 +7,6 @@ from model.UserModel import UserModels
 from views.Login import LoginView
 from views.Register import RegisterView
 from views.ForgotPass import ForgotPassView
-from controller.DashboardController import DashboardController
 
 class AuthController:
     def __init__(self, root):
@@ -37,6 +36,7 @@ class AuthController:
             register_view.place(x=61, y=78, width=244, height=244)
 
     def login(self, username, password):
+        from controller.DashboardController import DashboardController
         user = UserModels.validate_user(username)        
         if user != None and check_password(user.password, password):
             messagebox.showinfo("Thông Báo!", "Đăng nhập thành công!")

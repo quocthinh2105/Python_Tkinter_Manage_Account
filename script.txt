@@ -48,6 +48,7 @@ CREATE TABLE public.messages (
 
 
 ---------------Installing ---------------
+pip install Pillow
 pip install cryptography
 
 -- Đóng gói ứng dung:

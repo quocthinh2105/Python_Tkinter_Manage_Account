@@ -43,3 +43,12 @@ class AccountController:
                 account_view.refresh_data()
         else:
             messagebox.showinfo("Thông Báo!", "Có lỗi trong quá trình xử lý.\nVui lòng thử lại sau!")
+
+    def delete_account(self, accountId):
+        if AccountModels.delete_account(accountId):
+            messagebox.showinfo("Thông Báo!", "Xoá tài khoản thành công.")
+            account_view = self.dashboard_controller.frames.get("ACCOUNT")
+            if account_view:
+                account_view.refresh_data()
+        else:
+            messagebox.showinfo("Thông Báo!", "Có lỗi trong quá trình xử lý.\nVui lòng thử lại sau!")
