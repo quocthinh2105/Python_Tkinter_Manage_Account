@@ -1,0 +1,57 @@
+---------------Database ---------------
+
+CREATE TABLE public.users (
+	id int4 NOT NULL,
+	username varchar(100) NOT NULL,
+	"password" varchar(255) NOT NULL,
+	email varchar(255) NOT NULL,
+	phone varchar(15) NULL,
+	created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT uc_user UNIQUE (username, email),
+	CONSTRAINT users_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public.account_pass (
+	id serial4 NOT NULL,
+	user_name varchar(255) NOT NULL,
+	app_name varchar(255) NULL,
+	acc_name varchar(255) NOT NULL,
+	acc_pass varchar(255) NOT NULL,
+	acc_pass_enc varchar(255) NOT NULL,
+	key_enc varchar(255) NOT NULL,
+	description varchar(255) NULL,
+	is_remove int4 DEFAULT 0 NULL,
+	created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+	updated_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+	CONSTRAINT account_pass_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public.contact (
+	id serial4 NOT NULL,
+	contact_name varchar(100) NOT NULL,
+	email varchar(255) NOT NULL,
+	phone varchar(15) NULL,
+	user_name varchar NOT NULL,
+	unfriend int4 DEFAULT 0 NULL,
+	created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+	CONSTRAINT contact_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public.messages (
+	id int4 DEFAULT NOT NULL,
+	message text NOT NULL,
+	sender_id varchar(100) NOT NULL,
+	receiver_id varchar(100) NOT NULL,
+	created_at timestamp DEFAULT CURRENT_TIMESTAMP NULL,
+	CONSTRAINT message_pkey PRIMARY KEY (id)
+);
+
+
+---------------Installing ---------------
+pip install cryptography
+
+-- Đóng gói ứng dung:
+pip install pyinstaller
+
+pyinstaller --onefile --windowed --add-data "images/*:images" --name "Manage_Account" --icon="icon.ico" Main.py
+
